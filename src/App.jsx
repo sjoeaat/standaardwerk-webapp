@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {  Code, Eye, FileText, Settings, AlertCircle, Download, UploadCloud,
   Folder, Loader2, Bug
 } from 'lucide-react';
-import { UnifiedTextParser } from './core/UnifiedTextParser.js';
+import { TrainingEnhancedParser } from './core/TrainingEnhancedParser.js';
 import { DEFAULT_VALIDATION_RULES } from './config/validationRules.js';
 // UPDATED: Gebruik de enhanced word parser
 import { parseWordDocument } from './core/enhancedWordParser';
@@ -334,7 +334,7 @@ function App() {
         setParseResult(resultFromWord);
       } else {
         try {
-          const parser = new UnifiedTextParser(syntaxRules, validationRules);
+          const parser = new TrainingEnhancedParser(syntaxRules, validationRules);
           // Register existing programs for cross-reference validation
           programRegistry.forEach((program, name) => {
             parser.registerProgram(name, program);
