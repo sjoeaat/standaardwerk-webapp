@@ -112,9 +112,11 @@ const StepCard = ({ step }) => {
         <div className="mt-4">
           <h5 className="font-medium mb-3 text-gray-600 text-sm">Voorwaarden binnen stap:</h5>
           <div className="space-y-1">
-            {safeArray(step?.conditions).map((line, index) => (
+            {safeArray(step?.conditions).map((condition, index) => (
               <div key={index} className="ml-4 p-2 bg-gray-50 border-l-4 border-blue-200 text-sm rounded-r">
-                <span className="font-mono text-gray-800">{line}</span>
+                <span className="font-mono text-gray-800">
+                  {typeof condition === 'string' ? condition : condition?.text || condition?.originalText || JSON.stringify(condition)}
+                </span>
               </div>
             ))}
           </div>

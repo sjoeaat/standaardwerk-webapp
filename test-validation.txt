@@ -1,0 +1,39 @@
+RUST: Wacht op startsein
+  - Niet VensterOpen
+  - Niet NotStop
+  - Niet Storing
+
+SCHRITT 1: Vul tank A
+  - TankA_Niveau < 90
+  - Startknop
+  + VON SCHRITT 2
+
+SCHRITT 2: Vul tank B
+  - TankB_Niveau < 90
+  - Startknop
+  + VON SCHRITT 1
+
+SCHRITT 3: Afvoer naar tank C
+  - TankC_Niveau < 95
+  - Afvoerklep_Open
+
+SCHRITT 7: Reiniging
+  - Reinigingscyclus_Aktief
+  - Tijd_Reiniging > 60
+
+SCHRITT 7: Spoeling (duplicate voor test)
+  - Spoelcyclus_Aktief
+  - Tijd_Spoeling > 30
+
+Hulpvariabelen:
+Startknop_Gedrukt = 
+TankA_Niveau = 
+TankB_Niveau = 
+TankC_Niveau = 
+Afvoerklep_Open = 
+Reinigingscyclus_Aktief = 
+Spoelcyclus_Aktief = 
+
+Timers:
+TIJD = Reiniging_Timer 60 Sek
+TIJD = Spoeling_Timer 30 Sek

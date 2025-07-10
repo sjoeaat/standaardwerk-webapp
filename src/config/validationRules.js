@@ -288,6 +288,12 @@ export function validateVariableDefinition(definition, rules = DEFAULT_VALIDATIO
   const errors = [];
   const warnings = [];
   
+  // Check if validation is disabled (flexible mode)
+  if (rules.strict === false || rules.allowVariablesWithoutConditions === true) {
+    const group = determineVariableGroup(definition.name, rules);
+    return { errors, warnings, group, groupRules: rules.groups[group] };
+  }
+  
   // Determine group
   const group = determineVariableGroup(definition.name, rules);
   if (!group) {
@@ -353,6 +359,11 @@ export function determineVariableGroup(name, rules = DEFAULT_VALIDATION_RULES) {
 export function validateStepDefinition(step, rules = DEFAULT_VALIDATION_RULES) {
   const errors = [];
   const warnings = [];
+  
+  // Check if validation is disabled (flexible mode)
+  if (rules.strict === false || rules.allowRustConditions === true) {
+    return { errors, warnings, stepRules: rules.stepValidation[step.type === 'RUST' ? 'rust' : 'schritt'] };
+  }
   
   const stepType = step.type === 'RUST' ? 'rust' : 'schritt';
   const stepRules = rules.stepValidation[stepType];

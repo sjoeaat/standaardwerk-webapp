@@ -30,8 +30,22 @@ export class FlexibleParser {
    * Parse text with flexible validation (compatible with UnifiedTextParser interface)
    */
   parse(text, source = 'manual', metadata = {}) {
-    // Use EnhancedParser for actual parsing
+    // Use EnhancedParser for actual parsing but suppress validation
+    const originalValidation = this.enhancedParser.validationRules;
+    
+    // Temporarily disable strict validation
+    this.enhancedParser.validationRules = {
+      ...originalValidation,
+      strict: false,
+      allowDuplicateSteps: true,
+      allowRustConditions: true,
+      allowVariablesWithoutConditions: true
+    };
+    
     const result = this.enhancedParser.parseText(text);
+    
+    // Restore original validation rules
+    this.enhancedParser.validationRules = originalValidation;
     
     // Apply flexible validation (less strict than original)
     const validatedResult = this.applyFlexibleValidation(result);

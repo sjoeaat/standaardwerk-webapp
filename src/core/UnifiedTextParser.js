@@ -378,20 +378,22 @@ export class UnifiedTextParser {
   validateStepLogicConsistency(result) {
     const steps = result.steps;
     
-    // Check for duplicate step numbers
-    const stepNumbers = new Map();
-    steps.forEach(step => {
-      if (step.type === 'SCHRITT') {
-        if (stepNumbers.has(step.number)) {
-          result.errors.push({
-            type: 'DUPLICATE_STEP',
-            message: `Duplicate step number: ${step.number}`,
-            lineNumber: step.lineNumber,
-          });
+    // Check for duplicate step numbers (skip if flexible validation is enabled)
+    if (this.validationRules.strict !== false && this.validationRules.allowDuplicateSteps !== true) {
+      const stepNumbers = new Map();
+      steps.forEach(step => {
+        if (step.type === 'SCHRITT') {
+          if (stepNumbers.has(step.number)) {
+            result.errors.push({
+              type: 'DUPLICATE_STEP',
+              message: `Duplicate step number: ${step.number}`,
+              lineNumber: step.lineNumber,
+            });
+          }
+          stepNumbers.set(step.number, step);
         }
-        stepNumbers.set(step.number, step);
-      }
-    });
+      });
+    }
     
     // Check for missing sequential steps
     const schrittSteps = steps.filter(s => s.type === 'SCHRITT').sort((a, b) => a.number - b.number);
